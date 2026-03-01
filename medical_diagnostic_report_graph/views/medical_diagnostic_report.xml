@@ -24,7 +24,7 @@
                     type="object"
                     icon="fa-line-chart"
                     class="btn-primary"
-                    attrs="{'invisible': ['&amp;',('compute_graph', '=', False), ('compute_html', '=', False)]}"
+                    invisible="not (compute_graph or compute_html)"
                 />
             </div>
         </field>
@@ -42,7 +42,7 @@
                         <field
                             name="bokeh_chart"
                             widget='bokeh_chart'
-                            attrs="{'invisible': [('bokeh_image', '!=', False)]}"
+                            invisible="bokeh_image"
                             nolabel="1"
                             colspan="2"
                         />
@@ -50,7 +50,7 @@
                     <field
                         name="bokeh_image"
                         widget='image'
-                        attrs="{'invisible': [('bokeh_image', '=', False)]}"
+                        invisible="not bokeh_image"
                     />
                     <field name="html_chart" />
                 </sheet>

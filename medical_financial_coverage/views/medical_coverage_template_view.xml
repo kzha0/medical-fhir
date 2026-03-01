@@ -5,16 +5,16 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 -->
 <odoo>
-    <record id="medical_coverage_template_view_tree" model="ir.ui.view">
-        <field name="name">medical.coverage.template.view.tree</field>
+    <record id="medical_coverage_template_view_list" model="ir.ui.view">
+        <field name="name">medical.coverage.template.view.list</field>
         <field name="model">medical.coverage.template</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="internal_identifier" />
                 <field name="name" />
                 <field name="payor_id" />
                 <field name="state" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="medical_coverage_template_view_form" model="ir.ui.view">
@@ -28,7 +28,7 @@
                         type="object"
                         name="draft2active"
                         class="oe_highlight"
-                        attrs="{'invisible': [('state','!=','draft')]}"
+                        invisible="state != 'draft'"
                     />
                     <button
                         string="Cancel"
@@ -36,14 +36,14 @@
                         name="draft2cancelled"
                         class="oe_highlight"
                         confirm="Are you sure that you want to cancel the coverage template"
-                        attrs="{'invisible': [('state','!=','draft')]}"
+                        invisible="state != 'draft'"
                     />
                     <button
                         string="Entered In Error"
                         type="object"
                         name="draft2enteredinerror"
                         class="oe_highlight"
-                        attrs="{'invisible': [('state','!=','draft')]}"
+                        invisible="state != 'draft'"
                     />
                     <button
                         string="Cancel"
@@ -51,7 +51,7 @@
                         name="active2cancelled"
                         confirm="Are you sure that you want to cancel the coverage template"
                         class="oe_highlight"
-                        attrs="{'invisible': [('state','!=','active')]}"
+                        invisible="state != 'active'"
                     />
                     <button
                         string="Entered In Error"
@@ -59,7 +59,7 @@
                         name="active2enteredinerror"
                         confirm="Are you sure that you want to mark as errored the coverage template"
                         class="oe_highlight"
-                        attrs="{'invisible': [('state','!=','active')]}"
+                        invisible="state != 'active'"
                     />
                     <button
                         string="Entered In Error"
@@ -67,7 +67,7 @@
                         name="cancelled2enteredinerror"
                         confirm="Are you sure that you want to mark as errored the coverage template"
                         class="oe_highlight"
-                        attrs="{'invisible': [('state','!=','cancelled')]}"
+                        invisible="state != 'cancelled'"
                     />
                     <button
                         string="Send to draft"
@@ -75,7 +75,7 @@
                         name="active2draft"
                         confirm="Are you sure that you want to mark as draft the coverage template"
                         class="oe_highlight"
-                        attrs="{'invisible': [('state','!=','active')]}"
+                        invisible="state != 'active'"
                     />
                     <button
                         string="Send to draft"
@@ -83,14 +83,14 @@
                         name="cancelled2draft"
                         confirm="Are you sure that you want to mark as draft the coverage template"
                         class="oe_highlight"
-                        attrs="{'invisible': [('state','!=','cancelled')]}"
+                        invisible="state != 'cancelled'"
                     />
                     <button
                         string="Activate"
                         type="object"
                         name="cancelled2active"
                         class="oe_highlight"
-                        attrs="{'invisible': [('state','!=','cancelled')]}"
+                        invisible="state != 'cancelled'"
                     />
                     <field name="state" widget="statusbar" />
                 </header>
@@ -137,7 +137,7 @@
         <field name="name">Coverages</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">medical.coverage.template</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{}</field>
     </record>
 </odoo>

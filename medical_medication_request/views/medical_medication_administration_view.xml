@@ -5,13 +5,13 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 -->
 <odoo>
-    <record id="medical_medication_administration_view_tree" model="ir.ui.view">
-        <field name="name">medical.medication.administration.view.tree</field>
+    <record id="medical_medication_administration_view_list" model="ir.ui.view">
+        <field name="name">medical.medication.administration.view.list</field>
         <field name="model">medical.medication.administration</field>
         <field name="mode">primary</field>
-        <field name="inherit_id" ref="medical_base.medical_event_tree" />
+        <field name="inherit_id" ref="medical_base.medical_event_list" />
         <field name="arch" type="xml">
-            <xpath expr="//tree" position="attributes" />
+            <xpath expr="//list" position="attributes" />
         </field>
     </record>
     <record id="medical_medication_administration_view_form" model="ir.ui.view">
@@ -27,7 +27,7 @@
                     name="action_view_stock_moves"
                     class="oe_stat_button"
                     icon="fa-arrows-v"
-                    attrs="{'invisible': [('move_ids','=',False)]}"
+                    invisible="not move_ids"
                 />
             </xpath>
             <field name="service_id" position="after">
@@ -119,7 +119,7 @@
         <field name="name">Administration</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">medical.medication.administration</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{}</field>
     </record>
     <record model="ir.ui.menu" id="medical_medication_administration">

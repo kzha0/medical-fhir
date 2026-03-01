@@ -5,7 +5,7 @@
 {
     "name": "Medical Encounter careplan",
     "summary": "Joins careplans and encounters",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "CreuBlanca, ForgeFlow, Tegin",
     "website": "https://github.com/tegin/medical-fhir",
     "category": "Medical",

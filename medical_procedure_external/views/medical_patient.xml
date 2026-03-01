@@ -26,11 +26,11 @@
                     <field
                         name="external_request_ids_filtered"
                         widget="medical_one2many"
-                        mode="tree,kanban"
+                        mode="list,kanban"
                         readonly="1"
                         options="{'record_action': 'get_formview_action'}"
                     >
-                        <tree
+                        <list
                             default_order="fhir_state asc, create_date desc"
                             decoration-warning="fhir_state == 'draft'"
                         >
@@ -43,7 +43,7 @@
                             <field name="create_date" />
                             <field name="state" invisible="1" />
                             <field name="fhir_state" invisible="1" />
-                        </tree>
+                        </list>
                         <kanban>
                             <templates>
                                 <field name="fhir_state" invisible="1" />

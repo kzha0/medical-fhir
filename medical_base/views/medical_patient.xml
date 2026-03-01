@@ -5,26 +5,26 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 -->
 <odoo>
-    <record model="ir.ui.view" id="medical_patient_tree">
-        <field name="name">medical.patient.tree</field>
+    <record model="ir.ui.view" id="medical_patient_list">
+        <field name="name">medical.patient.list</field>
         <field name="model">medical.patient</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="internal_identifier" />
                 <field name="name" />
-            </tree></field>
+            </list></field>
     </record>
-    <record model="ir.ui.view" id="medical_patient_his_tree">
-        <field name="name">medical.patient.tree</field>
+    <record model="ir.ui.view" id="medical_patient_his_list">
+        <field name="name">medical.patient.list</field>
         <field name="model">medical.patient</field>
         <field name="priority">99</field>
         <field name="arch" type="xml">
-            <tree create="false">
+            <list create="false">
                 <field name="internal_identifier" />
                 <field name="vat" />
                 <field name="name" />
                 <field name="birth_date" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="medical_patient_form">
@@ -38,7 +38,7 @@
                         name="web_ribbon"
                         text="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active"
                     />
                     <field name="active" invisible="1" />
                     <div class="oe_button_box" name="button_box" />
@@ -67,7 +67,7 @@
                                 name="name"
                                 default_focus="1"
                                 placeholder="Name"
-                                attrs="{'required' : [('type', '=', 'contact')]}"
+                                required="type == 'contact'"
                             />
                             <field name="is_company" invisible="True" />
                             <field name="parent_id" invisible="True" />
@@ -78,11 +78,11 @@
                                 placeholder="Company"
                                 domain="[('is_company', '=', True)]"
                                 context="{'default_is_company': True}"
-                                attrs="{'invisible': ['|', '&amp;', ('is_company','=', True),('parent_id', '=', False),('company_name', '!=', False),('company_name', '!=', '')]}"
+                                invisible="is_company and not parent_id and company_name"
                             />
                             <field
                                 name="company_name"
-                                attrs="{'invisible': ['|', '|', ('company_name', '=', False), ('company_name', '=', ''), ('is_company', '=', True)]}"
+                                invisible="not company_name or is_company"
                             />
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                         <group>
                             <field
                                 name="type"
-                                attrs="{'invisible': [('parent_id','=', False)]}"
+                                invisible="not parent_id"
                                 groups="base.group_no_one"
                             />
                             <label for="street" string="Address" />
@@ -101,47 +101,47 @@
                                         type="object"
                                         string="(edit)"
                                         class="oe_link"
-                                        attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"
+                                        invisible="not parent_id or type != 'contact'"
                                     />
                                 </div>
                                 <field
                                     name="street"
                                     placeholder="Street..."
                                     class="o_address_street"
-                                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                    readonly="type == 'contact' and parent_id"
                                 />
                                 <field
                                     name="street2"
                                     placeholder="Street 2..."
                                     class="o_address_street"
-                                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                    readonly="type == 'contact' and parent_id"
                                 />
                                 <field
                                     name="city"
                                     placeholder="City"
                                     class="o_address_city"
-                                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                    readonly="type == 'contact' and parent_id"
                                 />
                                 <field
                                     name="state_id"
                                     class="o_address_state"
                                     placeholder="State"
                                     options='{"no_open": True}'
-                                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                    readonly="type == 'contact' and parent_id"
                                     context="{'country_id': country_id, 'zip': zip}"
                                 />
                                 <field
                                     name="zip"
                                     placeholder="ZIP"
                                     class="o_address_zip"
-                                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                    readonly="type == 'contact' and parent_id"
                                 />
                                 <field
                                     name="country_id"
                                     placeholder="Country"
                                     class="o_address_country"
                                     options='{"no_open": True, "no_create": True}'
-                                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                    readonly="type == 'contact' and parent_id"
                                 />
                             </div>
                             <field name="vat" placeholder="e.g. BE0477472701" />
@@ -156,7 +156,7 @@
                             <field
                                 name="function"
                                 placeholder="e.g. Sales Director"
-                                attrs="{'invisible': [('is_company','=', True)]}"
+                                invisible="is_company"
                             />
                             <field name="phone" widget="phone" />
                             <field name="mobile" widget="phone" />
@@ -165,7 +165,7 @@
                                 name="email"
                                 widget="email"
                                 context="{'gravatar_image': True}"
-                                attrs="{'required': [('user_ids','!=', [])]}"
+                                required="not user_ids"
                             />
                             <field
                                 name="website"
@@ -175,7 +175,7 @@
                             <field
                                 name="title"
                                 options='{"no_open": True}'
-                                attrs="{'invisible': [('is_company', '=', True)]}"
+                                invisible="is_company"
                             />
                             <field name="lang" />
                         </group>
@@ -191,7 +191,7 @@
                                 name="partner_ids"
                                 mode="kanban"
                                 widget="one2many_patient"
-                                context="{'default_patient_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_type': 'other'}"
+                                context="{'default_patient_id': id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_type': 'other'}"
                             >
                                 <kanban>
                                     <field name="id" />
@@ -219,7 +219,7 @@
                                     <field name="display_name" />
                                     <field name="partner_id" />
                                     <templates>
-                                        <t t-name="kanban-box">
+                                        <t t-name="card">
                                             <t
                                                 t-set="color"
                                                 t-value="kanban_color(record.color.raw_value)"
@@ -299,35 +299,35 @@
                                         <div class="text-muted oe_edit_only">
                                             <p
                                                 class="mb-0"
-                                                attrs="{'invisible': [('type', '!=', 'contact')]}"
+                                                invisible="type != 'contact'"
                                             >
                                                 <span
                                                 >Use this to organize the contact details of employees of a given company (e.g. CEO, CFO, ...).</span>
                                             </p>
                                             <p
                                                 class="mb-0"
-                                                attrs="{'invisible': [('type', '!=', 'invoice')]}"
+                                                invisible="type != 'invoice'"
                                             >
                                                 <span
                                                 >Preferred address for all invoices. Selected by default when you invoice an order that belongs to this company.</span>
                                             </p>
                                             <p
                                                 class="mb-0"
-                                                attrs="{'invisible': [('type', '!=', 'delivery')]}"
+                                                invisible="type != 'delivery'"
                                             >
                                                 <span
                                                 >Preferred address for all deliveries. Selected by default when you deliver an order that belongs to this company.</span>
                                             </p>
                                             <p
                                                 class="mb-0"
-                                                attrs="{'invisible': [('type', '!=', 'private')]}"
+                                                invisible="type != 'private'"
                                             >
                                                 <span
                                                 >Private addresses are only visible by authorized users and contain sensitive data (employee home addresses, ...).</span>
                                             </p>
                                             <p
                                                 class="mb-0"
-                                                attrs="{'invisible': [('type', '!=', 'other')]}"
+                                                invisible="type != 'other'"
                                             >
                                                 <span
                                                 >Other address for the company (e.g. subsidiary, ...)</span>
@@ -339,26 +339,26 @@
                                                 <field
                                                     name="name"
                                                     string="Contact Name"
-                                                    attrs="{'required' : [('type', '=', 'contact')]}"
+                                                    required="type == 'contact'"
                                                 />
                                                 <field
                                                     name="title"
                                                     options="{'no_open': True}"
                                                     placeholder="e.g. Mr."
-                                                    attrs="{'invisible': [('type','!=', 'contact')]}"
+                                                    invisible="type != 'contact'"
                                                 />
                                                 <field
                                                     name="function"
                                                     placeholder="e.g. Sales Director"
-                                                    attrs="{'invisible': [('type','!=', 'contact')]}"
+                                                    invisible="type != 'contact'"
                                                 />
                                                 <label
                                                     for="street"
                                                     string="Address"
-                                                    attrs="{'invisible': [('type','=', 'contact')]}"
+                                                    invisible="type == 'contact'"
                                                 />
                                                 <div
-                                                    attrs="{'invisible': [('type','=', 'contact')]}"
+                                                    invisible="type == 'contact'"
                                                 >
                                                     <div
                                                         class="o_address_format"
@@ -442,11 +442,7 @@
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers" />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter />
             </form>
         </field>
     </record>
@@ -518,54 +514,31 @@
                 <field name="mobile" />
                 <field name="state_id" />
                 <field name="category_id" />
-                <field name="image_128" />
+                <field name="avatar_128" />
                 <field name="type" />
                 <field name="id" invisible="1" />
                 <templates>
-                    <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click o_res_partner_kanban">
-                            <div
-                                class="o_kanban_tags_section oe_kanban_partner_categories"
-                            />
-                            <div class="o_kanban_image">
-                                <t t-if="record.image_128.raw_value">
-                                    <img
-                                        alt="Image"
-                                        t-att-src="kanban_image('medical.patient', 'image_128', record.id.raw_value)"
-                                    />
-                                </t>
-                                <t t-if="!record.image_128.raw_value">
-                                    <t t-if="record.is_company.raw_value === true">
-                                        <img
-                                            alt="company_image"
-                                            name="kanban_image_default_company"
-                                            t-attf-src='{{ _s }}/base/static/img/company_image.png'
-                                        />
-                                    </t>
-                                    <t t-if="record.is_company.raw_value === false">
-                                        <img
-                                            alt="default_image"
-                                            name="kanban_image_default_person"
-                                            t-attf-src='{{ _s }}/base/static/img/avatar.png'
-                                        />
-                                    </t>
-                                </t>
+                    <t t-name="card" class="flex-row">
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <aside class="o_kanban_aside_full">
+                            <div class="o_kanban_image_fill position-relative w-100">
+                                <field name="avatar_128" alt="Contact image" class="h-100" widget="image" options="{'img_class': 'object-fit-cover'}"/>
                             </div>
-                            <div class="oe_kanban_details">
+                        </aside>
+                        <main class="ps-2 ps-md-0">
                                 <strong class="oe_partner_heading">
-                                    <field name="display_name" />
+                                    <t t-esc="record.display_name.value" />
                                 </strong>
                                 <ul name="entity_details">
                                     <li
                                         t-if="record.email.raw_value"
                                         class="o_text_overflow"
                                     >
-                                        <field name="email" />
+                                        <t t-esc="record.email.value" />
                                     </li>
                                 </ul>
                                 <div class="oe_kanban_partner_links" />
-                            </div>
-                        </div>
+                        </main>
                     </t>
                 </templates>
             </kanban>
@@ -575,23 +548,23 @@
         <field name="name">Patients</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">medical.patient</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="context">{'default_company_type': 'person'}</field>
     </record>
     <record model="ir.actions.act_window" id="medical_patient_his_window_action">
         <field name="name">HIS</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">medical.patient</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record
         model="ir.actions.act_window.view"
-        id="medical_patient_his_window_action_tree"
+        id="medical_patient_his_window_action_list"
     >
         <field name="act_window_id" ref="medical_patient_his_window_action" />
         <field name="sequence" eval="20" />
-        <field name="view_mode">tree</field>
-        <field name="view_id" ref="medical_patient_his_tree" />
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="medical_patient_his_list" />
     </record>
     <record
         model="ir.actions.act_window.view"

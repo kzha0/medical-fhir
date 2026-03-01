@@ -6,7 +6,7 @@
     "summary": """
         This addon sets the base of the medical fhir concepts
         of medication.request and device.request""",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "Creu Blanca,Tegin",
     "website": "https://github.com/tegin/medical-fhir",

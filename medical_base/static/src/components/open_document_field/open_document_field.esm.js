@@ -4,6 +4,7 @@ import {Component} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {useFileViewer} from "../file_viewer/file_viewer_hook.esm";
 import {useService} from "@web/core/utils/hooks";
+import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class OpenDocumentViewerField extends Component {
     setup() {
@@ -21,4 +22,13 @@ export class OpenDocumentViewerField extends Component {
 
 OpenDocumentViewerField.template = "medical_base.OpenDocumentViewerField";
 
-registry.category("fields").add("open_document_viewer", OpenDocumentViewerField);
+OpenDocumentViewerField.props = {
+    ...standardFieldProps,
+};
+
+export const openDocumentViewerField = {
+    component: OpenDocumentViewerField,
+    supportedTypes: ["integer"],
+};
+
+registry.category("fields").add("open_document_viewer", openDocumentViewerField);

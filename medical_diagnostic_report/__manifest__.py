@@ -5,13 +5,13 @@
     "name": "Medical Diagnostic Report",
     "summary": """
         Allows to create reports for patients""",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "CreuBlanca,Odoo Community Association (OCA), Tegin",
     "website": "https://github.com/tegin/medical-fhir",
     "depends": [
         "medical_base",
-        "web_editor",
+        "html_editor",
         "medical_certify",
         "web_widget_bokeh_chart",
         "account",

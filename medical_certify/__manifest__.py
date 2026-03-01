@@ -5,10 +5,10 @@
     "name": "Medical Certify",
     "summary": """
         Certify medical entities""",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "CreuBlanca,Odoo Community Association (OCA), Tegin",
     "website": "https://github.com/tegin/medical-fhir",
-    "depends": ["report_qr"],
+    "depends": ["base"],
     "data": ["views/certify_base.xml"],
 }

@@ -21,7 +21,7 @@
                 <page
                     name="graph"
                     string="Graphs Python Code"
-                    attrs="{'invisible': [('compute_graph', '=', False)]}"
+                    invisible="not compute_graph"
                     groups="base.group_no_one"
                 >
                     <field
@@ -33,7 +33,7 @@
                 <page
                     name="html_code"
                     string="Html Code"
-                    attrs="{'invisible': [('compute_html', '=', False)]}"
+                    invisible="not compute_html"
                     groups="base.group_no_one"
                 >
                     <field name="html_code" widget="ace" options="{'mode': 'xml'}" />

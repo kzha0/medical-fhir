@@ -13,7 +13,7 @@
                         nolabel="1"
                         decoration-danger="1"
                         colspan="2"
-                        attrs="{'invisible':[('show_encounter_warning', '=', False)]}"
+                        invisible="not show_encounter_warning"
                     />
                     <field name="show_encounter_warning" invisible="1" />
                     <group>

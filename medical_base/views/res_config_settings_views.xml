@@ -10,47 +10,35 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="base.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('settings')]" position="inside">
-                <div
-                    class="app_settings_block"
-                    string="Medical"
+            <xpath expr="//form" position="inside">
+                <app
                     data-string="Medical"
-                    data-key="medical_base"
+                    string="Medical"
+                    name="medical_base"
                     groups="medical_base.group_medical_configurator"
                 >
-                    <h2><i
-                            class="fa fa-user-md"
-                            aria-hidden="true"
-                        /> Administration</h2>
-                    <div
-                        class="row mt16 o_settings_container"
-                        id="medical_administration"
-                    />
-                    <h2><i class="fa fa-stethoscope" aria-hidden="true" /> Clinical</h2>
-                    <div class="row mt16 o_settings_container" id="medical_clinical" />
-                    <h2><i class="fa fa-sitemap" aria-hidden="true" /> Workflow</h2>
-                    <div class="row mt16 o_settings_container" id="medical_workflow" />
-                    <h2><i class="fa fa-usd" aria-hidden="true" /> Financial</h2>
-                    <div class="row mt16 o_settings_container" id="medical_financial" />
-                    <h2><i
-                            class="fa fa-heartbeat"
-                            aria-hidden="true"
-                        /> Diagnostics</h2>
-                    <div
-                        class="row mt16 o_settings_container"
-                        id="medical_diagnostics"
-                    />
-                    <h2><i class="fa fa-flask" aria-hidden="true" /> Medication</h2>
-                    <div
-                        class="row mt16 o_settings_container"
-                        id="medical_medication"
-                    />
-                    <h2><i class="fa fa-book" aria-hidden="true" /> Terminologies</h2>
-                    <div
-                        class="row mt16 o_settings_container"
-                        id="medical_terminology"
-                    />
-                </div>
+                    <block title="Administration" name="medical_administration_block">
+                        <div class="row mt16 o_settings_container" id="medical_administration" />
+                    </block>
+                    <block title="Clinical" name="medical_clinical_block">
+                        <div class="row mt16 o_settings_container" id="medical_clinical" />
+                    </block>
+                    <block title="Workflow" name="medical_workflow_block">
+                        <div class="row mt16 o_settings_container" id="medical_workflow" />
+                    </block>
+                    <block title="Financial" name="medical_financial_block">
+                        <div class="row mt16 o_settings_container" id="medical_financial" />
+                    </block>
+                    <block title="Diagnostics" name="medical_diagnostics_block">
+                        <div class="row mt16 o_settings_container" id="medical_diagnostics" />
+                    </block>
+                    <block title="Medication" name="medical_medication_block">
+                        <div class="row mt16 o_settings_container" id="medical_medication" />
+                    </block>
+                    <block title="Terminologies" name="medical_terminology_block">
+                        <div class="row mt16 o_settings_container" id="medical_terminology" />
+                    </block>
+                </app>
             </xpath>
         </field>
     </record>

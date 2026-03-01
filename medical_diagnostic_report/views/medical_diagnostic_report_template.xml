@@ -15,7 +15,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active"
                     />
                     <div name="button_box" class="oe_button_box">
                         <button
@@ -49,10 +49,10 @@
                             name="item"
                             string="Observations"
                             groups="medical_base.group_medical_configurator"
-                            attrs="{'invisible':[('with_observation', '=', False)]}"
+                            invisible="not with_observation"
                         >
                             <field name="item_ids" widget="section_and_note_one2many">
-                                <tree
+                                <list
                                     editable="bottom"
                                     decoration-danger="blocked==True or parent.item_blocked == True"
                                 >
@@ -98,45 +98,45 @@
                                     <field
                                         name="value_type_view"
                                         string="Value type"
-                                        attrs="{'required': [('display_type', '=', False)],'readonly': ['|', ('blocked', '=', True), ('concept_id', '!=', False)]}"
+                                        required="not display_type" readonly="blocked or concept_id"
                                         force_save="1"
                                     />
                                     <field
                                         name="selection_options"
-                                        attrs="{'required': [('value_type_view', '=', 'selection')], 'readonly': [('value_type_view', '!=', 'selection')], 'invisible': [('concept_id', '!=', False)]}"
+                                        required="value_type_view == 'selection'" readonly="value_type_view != 'selection'" invisible="concept_id"
                                     />
                                     <field
                                         name="view_uom_id"
                                         string="Uom"
-                                        attrs="{'readonly': ['|', '|',('blocked', '=', True), ('concept_id', '!=', False), '|', '|', ('value_type_view', '=', 'selection'), ('value_type_view', '=', 'str'), ('value_type_view', '=', 'bool')]}"
+                                        readonly="blocked or concept_id or value_type_view in ['selection', 'str', 'bool']"
                                         force_save="1"
                                     />
                                     <field name="reference_range_low" invisible="1" />
                                     <field
                                         name="reference_range_low_view"
                                         string="Reference range low"
-                                        attrs="{'readonly': ['|', '|',('blocked', '=', True), ('concept_id', '!=', False), '|', '|', ('value_type_view', '=', 'selection'), ('value_type_view', '=', 'str'), ('value_type_view', '=', 'bool')]}"
+                                        readonly="blocked or concept_id or value_type_view in ['selection', 'str', 'bool']"
                                         force_save="1"
                                     />
                                     <field
                                         name="reference_range_high_view"
                                         string="Reference range high"
-                                        attrs="{'readonly': ['|', '|',('blocked', '=', True), ('concept_id', '!=', False), '|', '|', ('value_type_view', '=', 'selection'), ('value_type_view', '=', 'str'), ('value_type_view', '=', 'bool')]}"
+                                        readonly="blocked or concept_id or value_type_view in ['selection', 'str', 'bool']"
                                         force_save="1"
                                     />
                                     <field
                                         name="reference_range_limit"
-                                        attrs="{'readonly': ['|', '|',('blocked', '=', True), ('concept_id', '!=', False), '|', '|', ('value_type_view', '=', 'selection'), ('value_type_view', '=', 'str'), ('value_type_view', '=', 'bool')]}"
+                                        readonly="blocked or concept_id or value_type_view in ['selection', 'str', 'bool']"
                                         force_save="1"
                                     />
                                     <field name="blocked" invisible="1" />
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page
                             name="composition"
                             string="Composition"
-                            attrs="{'invisible': [('with_composition','=',False)]}"
+                            invisible="not with_composition"
                         >
                             <field
                                 name="composition"
@@ -146,7 +146,7 @@
                         <page
                             name="conclusions"
                             string="Conclusions"
-                            attrs="{'invisible': [('with_conclusion','=',False)]}"
+                            invisible="not with_conclusion"
                         >
                             <field
                                 name="conclusion"
@@ -158,21 +158,21 @@
             </form>
         </field>
     </record>
-    <record model="ir.ui.view" id="medical_diagnostic_report_template_tree_view">
+    <record model="ir.ui.view" id="medical_diagnostic_report_template_list_view">
         <field
             name="name"
-        >medical.diagnostic.report.template.tree (in medical_diagnostic_report)</field>
+        >medical.diagnostic.report.template.list (in medical_diagnostic_report)</field>
         <field name="model">medical.diagnostic.report.template</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="medical_report_template_act_window" model="ir.actions.act_window">
         <field name="name">Diagnostic Report Template</field>
         <field name="res_model">medical.diagnostic.report.template</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record model="ir.ui.menu" id="medical_report_configuration">
         <field name="name">Report Configuration</field>

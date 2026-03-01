@@ -14,21 +14,21 @@
                     <button
                         string="Validate"
                         name="validate_action"
-                        states="draft"
+                        invisible="state != 'draft'"
                         type="object"
                         class="btn-success"
                     />
                     <button
                         string="Complete"
                         name="complete_action"
-                        states="active"
+                        invisible="state != 'active'"
                         type="object"
                         class="btn-success"
                     />
                     <button
                         string="Cancel"
                         name="cancel_action"
-                        states="active,completed"
+                        invisible="state not in ['active', 'completed']"
                         type="object"
                         class="btn-danger"
                     />
@@ -38,7 +38,7 @@
                         name="web_ribbon"
                         text="Cancelled"
                         bg_color="bg-danger"
-                        attrs="{'invisible':[('state', '!=', 'cancelled')]}"
+                        invisible="state != 'cancelled'"
                     />
                     <h2>
                         <label for="internal_identifier" />
@@ -59,23 +59,23 @@
                         <group>
                             <field
                                 name="patient_id"
-                                attrs="{'readonly':[('state', '!=', 'draft')]}"
+                                readonly="state != 'draft'"
                             />
                             <field
                                 name="encounter_id"
-                                attrs="{'readonly':[('state', '!=', 'draft')]}"
+                                readonly="state != 'draft'"
                             />
                             <field name="can_administrate" invisible="1" />
                         </group>
                         <group>
                             <field name="requester_id" readonly="1" force_save="1" />
                             <field name="validation_date" readonly="1" force_save="1" />
-                            <field name="cancel_date" states="cancelled" />
-                            <field name="cancel_user_id" states="cancelled" />
+                            <field name="cancel_date" invisible="state != 'cancelled'" />
+                            <field name="cancel_user_id" invisible="state != 'cancelled'" />
                         </group>
                         <group
                             string="Medication"
-                            attrs="{'invisible': [('product_type', '!=', 'medication')]}"
+                            invisible="product_type != 'medication'"
                         >
                             <label
                                 string="Medication"
@@ -84,25 +84,25 @@
                             <field
                                 name="medical_product_template_id"
                                 nolabel="1"
-                                attrs="{'readonly':[('state', '!=', 'draft')]}"
+                                readonly="state != 'draft'"
                                 options="{'no_create': True, 'no_open': True}"
                             />
                             <field name="dose_uom_domain" invisible="1" nolabel="1" />
                         </group>
                         <group
                             string="Device"
-                            attrs="{'invisible': [('product_type', '!=', 'device')]}"
+                            invisible="product_type != 'device'"
                         >
                             <label string="Device" for="medical_product_template_id" />
                             <field
                                 name="medical_product_template_id"
                                 nolabel="1"
-                                attrs="{'readonly':[('state', '!=', 'draft')]}"
+                                readonly="state != 'draft'"
                             />
                         </group>
                         <group
                             string="Product to dispense"
-                            attrs="{'invisible': [('category' ,'!=', 'discharge')]}"
+                            invisible="category != 'discharge'"
                         >
                             <field name="medical_product_id" string="Product" />
                             <field name="quantity_to_dispense" string="Quantity" />
@@ -110,20 +110,20 @@
                         <group
                             name="posology"
                             string="Posology"
-                            attrs="{'invisible': [('product_type', '!=', 'medication')]}"
+                            invisible="product_type != 'medication'"
                         >
                             <group>
                                 <field
                                     name="dose_quantity"
-                                    attrs="{ 'readonly':[('state', '!=', 'draft')]}"
+                                    readonly="state != 'draft'"
                                 />
                                 <field
                                     name="rate_quantity"
-                                    attrs="{ 'readonly':[('state', '!=', 'draft')]}"
+                                    readonly="state != 'draft'"
                                 />
                                 <field
                                     name="duration"
-                                    attrs="{ 'readonly':[('state', '!=', 'draft')]}"
+                                    readonly="state != 'draft'"
                                 />
                             </group>
                             <group class="oe_inline">
@@ -131,30 +131,30 @@
                                     name="dose_uom_id"
                                     string="Uom"
                                     domain="dose_uom_domain"
-                                    attrs="{ 'readonly':[('state', '!=', 'draft')]}"
+                                    readonly="state != 'draft'"
                                 />
                                 <field
                                     name="rate_uom_id"
                                     string="Uom"
-                                    attrs="{ 'readonly':[('state', '!=', 'draft')]}"
+                                    readonly="state != 'draft'"
                                 />
                                 <field
                                     name="duration_uom_id"
                                     string="Uom"
-                                    attrs="{ 'readonly':[('state', '!=', 'draft')]}"
+                                    readonly="state != 'draft'"
                                 />
                             </group>
                         </group>
                         <group
                             name="administration_route"
                             string="Administration Route"
-                            attrs="{'invisible': [('product_type', '!=', 'medication')]}"
+                            invisible="product_type != 'medication'"
                         >
                             <field
                                 name="administration_route_id"
                                 string="Adm.Route"
                                 domain="administration_route_domain"
-                                attrs="{ 'readonly':[('state', '!=', 'draft')]}"
+                                readonly="state != 'draft'"
                             />
                             <field name="administration_route_domain" invisible="1" />
                         </group>
@@ -163,7 +163,7 @@
                         <page
                             name="Administrations"
                             string="Administrations"
-                            attrs="{'invisible': [('category', '==', 'discharge')]}"
+                            invisible="category == 'discharge'"
                         >
                             <button
                                 name="create_medical_product_administration"
@@ -171,11 +171,11 @@
                                 type="object"
                                 icon="fa-hand-holding-medical"
                                 string=" Create Administration"
-                                attrs="{'invisible': ['|', ('can_administrate', '!=', True), ('category', '==', 'discharge')]}"
+                                invisible="not can_administrate or category == 'discharge'"
                             />
                             <separator />
                             <field name="product_administration_ids" readonly="1">
-                                <tree decoration-muted="state == 'cancelled'">
+                                <list decoration-muted="state == 'cancelled'">
                                     <field name="internal_identifier" />
                                     <field name="quantity_administered" />
                                     <field
@@ -185,7 +185,7 @@
                                     <field name="administration_date" />
                                     <field name="administration_user_id" />
                                     <field name="state" />
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
@@ -206,13 +206,13 @@
             </search>
         </field>
     </record>
-    <record model="ir.ui.view" id="medical_product_request_tree_view">
+    <record model="ir.ui.view" id="medical_product_request_list_view">
         <field
             name="name"
-        >medical.product.request.tree (in medical_product_request)</field>
+        >medical.product.request.list (in medical_product_request)</field>
         <field name="model">medical.product.request</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="internal_identifier" />
                 <field name="patient_id" />
                 <field name="medical_product_template_id" />
@@ -220,47 +220,47 @@
                 <field
                     name="dose_quantity"
                     string="Dose"
-                    attrs="{'invisible': [('product_type', '==', 'device')]}"
+                    invisible="product_type == 'device'"
                 />
                 <field
                     name="dose_uom_id"
                     string="Uom"
-                    attrs="{'invisible': [('product_type', '==', 'device')]}"
+                    invisible="product_type == 'device'"
                 />
                 <field
                     name="rate_quantity"
                     string="Rate"
-                    attrs="{'invisible': [('product_type', '==', 'device')]}"
+                    invisible="product_type == 'device'"
                 />
                 <field
                     name="rate_uom_id"
                     string="Uom"
-                    attrs="{'invisible': [('product_type', '==', 'device')]}"
+                    invisible="product_type == 'device'"
                 />
                 <field
                     name="duration"
                     string="Duration"
-                    attrs="{'invisible': [('product_type', '==', 'device')]}"
+                    invisible="product_type == 'device'"
                 />
                 <field
                     name="duration_uom_id"
                     string="Uom"
-                    attrs="{'invisible': [('product_type', '==', 'device')]}"
+                    invisible="product_type == 'device'"
                 />
                 <field
                     name="administration_route_id"
                     string="Adm. Route"
-                    attrs="{'invisible': [('product_type', '==', 'device')]}"
+                    invisible="product_type == 'device'"
                 />
-                <field name="requester_id" states="active,completed,cancelled" />
-                <field name="validation_date" states="active,completed,cancelled" />
+                <field name="requester_id" invisible="state not in ['active', 'completed', 'cancelled']" />
+                <field name="validation_date" invisible="state not in ['active', 'completed', 'cancelled']" />
                 <field name="state" invisible="1" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.actions.act_window" id="medical_product_request_act_window">
         <field name="name">Medical Product Request</field>
         <field name="res_model">medical.product.request</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>

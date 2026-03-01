@@ -98,8 +98,4 @@
                       (4, ref('base.group_erp_manager'))]"
         />
     </record>
-
-    <!-- Partner rules modification -->
-    <record id="base.res_partner_rule_private_employee" model="ir.rule">
-    </record>
 </odoo>

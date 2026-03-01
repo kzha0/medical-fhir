@@ -31,7 +31,7 @@
                 <field
                     name="procedure_request_id"
                     readonly="1"
-                    attrs="{'invisible': [('procedure_request_id', '=', False)]}"
+                    invisible="not procedure_request_id"
                 />
             </group>
         </field>

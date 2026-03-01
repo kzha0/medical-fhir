@@ -31,7 +31,7 @@
                 <field
                     name="medication_request_id"
                     readonly="1"
-                    attrs="{'invisible': [('medication_request_id', '=', False)]}"
+                    invisible="not medication_request_id"
                 />
             </group>
         </field>

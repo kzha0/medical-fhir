@@ -31,7 +31,7 @@
                 <field
                     name="careplan_id"
                     readonly="1"
-                    attrs="{'invisible': [('careplan_id', '=', False)]}"
+                    invisible="not careplan_id"
                 />
             </group>
         </field>

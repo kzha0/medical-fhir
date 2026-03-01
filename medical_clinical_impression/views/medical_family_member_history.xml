@@ -5,11 +5,11 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 -->
 <odoo>
-    <record id="medical_family_member_history_view_tree" model="ir.ui.view">
-        <field name="name">medical.family.member.history.view.tree</field>
+    <record id="medical_family_member_history_view_list" model="ir.ui.view">
+        <field name="name">medical.family.member.history.view.list</field>
         <field name="model">medical.family.member.history</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
+            <list editable="bottom">
                 <field name="internal_identifier" />
                 <field name="relationship" />
                 <field name="family_member_name" />
@@ -19,7 +19,7 @@
                 <field name="deceased" />
                 <field name="deceased_age" />
                 <field name="unable_to_obtain" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="medical_family_member_history_view_form" model="ir.ui.view">
@@ -34,7 +34,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active"
                     />
                     <h2>
                         <field name="internal_identifier" readonly="1" />
@@ -46,30 +46,30 @@
                         <group>
                             <field name="unable_to_obtain" />
                         </group>
-                        <group attrs="{'invisible': [('unable_to_obtain', '=', True)]}">
+                        <group invisible="unable_to_obtain">
                             <field name="family_member_name" />
                             <field name="relationship" />
                         </group>
-                        <group attrs="{'invisible': [('unable_to_obtain', '=', True)]}">
+                        <group invisible="unable_to_obtain">
                             <field name="sex" />
                         </group>
-                        <group attrs="{'invisible': [('unable_to_obtain', '=', True)]}">
+                        <group invisible="unable_to_obtain">
                             <field name="born_date" />
                         </group>
                         <group
-                            attrs="{'invisible': ['|', ('unable_to_obtain', '=', True), ('deceased', '=', True)]}"
+                            invisible="unable_to_obtain or deceased"
                         >
                             <field name="age" />
                         </group>
-                        <group attrs="{'invisible': [('unable_to_obtain', '=', True)]}">
+                        <group invisible="unable_to_obtain">
                             <field name="deceased" />
                             <field
                                 name="deceased_date"
-                                attrs="{'invisible':[('deceased', '=', False)]}"
+                                invisible="not deceased"
                             />
                             <field
                                 name="deceased_age"
-                                attrs="{'invisible':[('deceased', '=', False)]}"
+                                invisible="not deceased"
                             />
                         </group>
                         <group>
@@ -94,7 +94,7 @@
         <field name="name">Medical Family Member History</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">medical.family.member.history</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{}</field>
     </record>
 </odoo>

@@ -26,19 +26,19 @@
             </search>
         </field>
     </record>
-    <record model="ir.ui.view" id="medication_form_tree_view">
-        <field name="name">medication.form.tree (in medical_product_request)</field>
+    <record model="ir.ui.view" id="medication_form_list_view">
+        <field name="name">medication.form.list (in medical_product_request)</field>
         <field name="model">medication.form</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.actions.act_window" id="medication_form_act_window">
         <field name="name">Medication Form</field>
         <field name="res_model">medication.form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
     </record>

@@ -27,21 +27,21 @@
     </record>
     <record
         model="ir.ui.view"
-        id="medical_diagnostic_report_concepts_patient_tree_view"
+        id="medical_diagnostic_report_concepts_patient_list_view"
     >
         <field
             name="name"
-        >medical.observation.tree (in medical_diagnostic_report)</field>
+        >medical.observation.list (in medical_diagnostic_report)</field>
         <field name="model">medical.observation</field>
         <field name="arch" type="xml">
-            <tree default_order='observation_date desc' create="false">
+            <list default_order='observation_date desc' create="false">
                 <field name="name" />
                 <field name="value_type" invisible="1" />
                 <field name="value_representation" />
                 <field name="uom_id" />
                 <field name="interpretation" />
                 <field name="observation_date" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="medical_patient_his_form_view">
@@ -74,10 +74,10 @@
                     <field
                         name="diagnostic_report_ids"
                         widget="medical_one2many"
-                        mode="tree,kanban"
+                        mode="list,kanban"
                         options="{'record_action': 'get_formview_action'}"
                     >
-                        <tree
+                        <list
                             decoration-warning="fhir_state == 'registered'"
                             decoration-danger="fhir_state == 'cancelled'"
                         >
@@ -96,7 +96,7 @@
                             <field name="create_date" />
                             <field name="state" invisible="1" />
                             <field name="fhir_state" invisible="1" />
-                        </tree>
+                        </list>
                         <kanban class="o_kanban_mobile">
                             <field name="name" />
                             <field name="internal_identifier" />
@@ -146,7 +146,7 @@
     >
         <field name="name">Observations</field>
         <field name="res_model">medical.observation</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
 </odoo>

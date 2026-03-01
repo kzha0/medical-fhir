@@ -15,7 +15,7 @@
                 <field
                     name="encounter_id"
                     readonly="1"
-                    attrs="{'invisible': [('encounter_id', '=', False)]}"
+                    invisible="not encounter_id"
                 />
             </group>
         </field>

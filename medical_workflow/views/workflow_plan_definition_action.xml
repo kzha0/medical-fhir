@@ -5,15 +5,15 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 -->
 <odoo>
-    <record model="ir.ui.view" id="workflow_plan_definition_action_tree">
-        <field name="name">workflow.plan.definition.action.tree</field>
+    <record model="ir.ui.view" id="workflow_plan_definition_action_list">
+        <field name="name">workflow.plan.definition.action.list</field>
         <field name="model">workflow.plan.definition.action</field>
         <field name="priority" eval="16" />
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="complete_name" />
                 <field name="parent_id" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="workflow_plan_definition_action_form">
@@ -76,7 +76,7 @@
         <field name="name">Action</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">workflow.plan.definition.action</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{}</field>
     </record>
     <record model="ir.ui.menu" id="workflow_plan_definition_actions_menu">

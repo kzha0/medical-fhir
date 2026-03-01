@@ -5,11 +5,11 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 -->
 <odoo>
-    <record id="medical_procedure_view_tree" model="ir.ui.view">
-        <field name="name">medical.procedure.view.tree</field>
+    <record id="medical_procedure_view_list" model="ir.ui.view">
+        <field name="name">medical.procedure.view.list</field>
         <field name="model">medical.procedure</field>
         <field name="mode">primary</field>
-        <field name="inherit_id" ref="medical_base.medical_event_tree" />
+        <field name="inherit_id" ref="medical_base.medical_event_list" />
         <field name="arch" type="xml">
             <field name="service_id" position="after">
                 <field name="performer_id" />
@@ -106,7 +106,7 @@
         <field name="name">Procedures</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">medical.procedure</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{}</field>
     </record>
 

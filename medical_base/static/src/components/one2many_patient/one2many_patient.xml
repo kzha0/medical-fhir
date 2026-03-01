@@ -8,13 +8,13 @@
         t-inherit-mode="primary"
         owl="1"
     >
-        <xpath expr="//button[hasclass('o-kanban-button-new')]" position="after">
+        <xpath expr="//div[hasclass('o_cp_buttons')]" position="inside">
             <button
                 type="button"
-                class="btn btn-secondary o-kanban-button-link"
+                class="btn btn-secondary"
                 title="Add Existing record"
                 accesskey="c"
-                t-on-click="() => this.onAddLink()"
+                t-on-click.stop.prevent="() => this.onAddLink()"
             >
                 <t t-esc="linkButtonText" />
             </button>

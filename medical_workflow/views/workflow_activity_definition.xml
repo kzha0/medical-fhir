@@ -5,17 +5,17 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 -->
 <odoo>
-    <record model="ir.ui.view" id="workflow_activity_definition_tree">
-        <field name="name">workflow.activity.definition.tree</field>
+    <record model="ir.ui.view" id="workflow_activity_definition_list">
+        <field name="name">workflow.activity.definition.list</field>
         <field name="model">workflow.activity.definition</field>
         <field name="priority" eval="16" />
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="description" />
                 <field name="service_id" />
                 <field name="state" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="workflow_activity_definition_form">
@@ -29,19 +29,19 @@
                         name="activate"
                         string="Activate"
                         type="object"
-                        states="draft"
+                        invisible="state != 'draft'"
                     />
                     <button
                         name="retire"
                         string="Retire"
                         type="object"
-                        states="active"
+                        invisible="state != 'active'"
                     />
                     <button
                         name="reactivate"
                         string="Reactivate"
                         type="object"
-                        states="retired"
+                        invisible="state != 'retired'"
                     />
                     <field name="state" widget="statusbar" />
                 </header>
@@ -99,7 +99,7 @@
         <field name="name">Activity Definition</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">workflow.activity.definition</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record model="ir.ui.menu" id="workflow_activity_definitions_menu">
         <field name="name">Activity definitions</field>

@@ -9,7 +9,7 @@
         <field name="name">Medical Locations</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="domain">[('is_location', '=', True), ('center_id', '=',
             active_id)]
         </field>
@@ -29,7 +29,7 @@
         />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='child_ids']//form//field[@name='parent_id']"
+                expr="//field[@name='child_ids']//form//field[@name='company_id']"
                 position="after"
             >
                 <field name="is_center" invisible="1" />
@@ -40,12 +40,12 @@
             <xpath expr="//field[@name='is_medical']/.." position="after">
                 <group
                     name="location_config"
-                    attrs="{'invisible': [('is_location','=',False)]}"
+                    invisible="not is_location"
                     groups="medical_base.group_medical_user"
                 >
                     <field
                         name="center_id"
-                        attrs="{'required': [('is_location', '=', True)]}"
+                        required="is_location"
                     />
                 </group>
             </xpath>
@@ -56,7 +56,7 @@
                     class="oe_stat_button"
                     icon="fa-h-square"
                     groups="medical_base.group_medical_user"
-                    attrs="{'invisible': [('is_center', '=', False)]}"
+                    invisible="not is_center"
                 >
                     <field name="location_count" widget="statinfo" string="Locations" />
                     <field name='location_ids' invisible="1" />
@@ -68,7 +68,7 @@
         <field name="name">Medical Centers</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="domain">[('is_center', '=', True)]</field>
         <field name="context">{'default_company_type':'company',
             'default_is_company':True, 'default_is_center': True,

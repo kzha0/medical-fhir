@@ -16,40 +16,40 @@
                         <field name="value_type" />
                         <field
                             name="selection_options"
-                            attrs="{'required': [('value_type', '=', 'selection')], 'readonly': [('value_type', '!=', 'selection')]}"
+                            required="value_type == 'selection'" readonly="value_type != 'selection'"
                         />
                         <field
                             name="uom_id"
-                            attrs="{'readonly': ['|', '|', ('value_type', '=', 'selection'), ('value_type', '=', 'str'), ('value_type', '=', 'bool')]}"
+                            readonly="value_type in ['selection', 'str', 'bool']"
                         />
                         <field
                             name="reference_range_low"
-                            attrs="{'readonly': ['|', '|', ('value_type', '=', 'selection'), ('value_type', '=', 'str'), ('value_type', '=', 'bool')]}"
+                            readonly="value_type in ['selection', 'str', 'bool']"
                         />
                         <field
                             name="reference_range_high"
-                            attrs="{'readonly': [ '|', '|', ('value_type', '=', 'selection'), ('value_type', '=', 'str'), ('value_type', '=', 'bool')]}"
+                            readonly="value_type in ['selection', 'str', 'bool']"
                         />
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
-    <record model="ir.ui.view" id="medical_observation_concept_tree_view">
+    <record model="ir.ui.view" id="medical_observation_concept_list_view">
         <field
             name="name"
-        >medical.observation.concept.tree (in medical_diagnostic_report)</field>
+        >medical.observation.concept.list (in medical_diagnostic_report)</field>
         <field name="model">medical.observation.concept</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="medical_observation_concept_act_window" model="ir.actions.act_window">
         <field name="name">Observation concept</field>
         <field name="res_model">medical.observation.concept</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record model="ir.ui.menu" id="medical_observation_concept_menu">
         <field name="name">Observation concepts</field>

@@ -11,7 +11,7 @@
         <field name="inherit_id" ref="medical_base.res_partner_view_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='child_ids']//form//field[@name='parent_id']"
+                expr="//field[@name='child_ids']//form//field[@name='company_id']"
                 position="after"
             >
                 <field name="is_payor" invisible="1" />
@@ -26,7 +26,7 @@
                     class="oe_stat_button"
                     icon="fa-plus-square"
                     groups="medical_base.group_medical_financial"
-                    attrs="{'invisible': [('is_payor', '=', False)]}"
+                    invisible="not is_payor"
                 >
                     <field
                         name="coverage_template_count"
@@ -42,7 +42,7 @@
         <field name="name">Payors</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="domain">[('is_payor', '=', True)]</field>
         <field
             name="context"

@@ -2,7 +2,40 @@
 
 import {Component, useEffect, useRef, useState} from "@odoo/owl";
 import {useAutofocus, useService} from "@web/core/utils/hooks";
-import {hidePDFJSButtons} from "@web/legacy/js/libs/pdfjs";
+import {hidePDFJSButtons} from "@web/libs/pdfjs";
+
+function hidePDFJSButtonsExtended(rootElement, {hideDownload = false, hidePrint = false} = {}) {
+    hidePDFJSButtons(rootElement);
+    if (!hideDownload && !hidePrint) {
+        return;
+    }
+    const iframe =
+        rootElement?.tagName === "IFRAME" ? rootElement : rootElement?.querySelector("iframe");
+    if (!iframe) {
+        return;
+    }
+    if (iframe.dataset.hideButtonsExtended) {
+        return;
+    }
+    iframe.dataset.hideButtonsExtended = "true";
+    const cssStyle = document.createElement("style");
+    cssStyle.rel = "stylesheet";
+    const rules = [];
+    if (hideDownload) {
+        rules.push(
+            "button#secondaryDownload.secondaryToolbarButton, button#download.toolbarButton { display: none !important; }"
+        );
+    }
+    if (hidePrint) {
+        rules.push(
+            "button#secondaryPrint.secondaryToolbarButton, button#print.toolbarButton { display: none !important; }"
+        );
+    }
+    cssStyle.textContent = rules.join("\n");
+    iframe.addEventListener("load", () => {
+        iframe.contentDocument?.head?.appendChild(cssStyle);
+    });
+}
 
 /**
  * @typedef {Object} File
@@ -55,7 +88,7 @@ export class FileViewer extends Component {
         useEffect(
             (el) => {
                 if (el) {
-                    hidePDFJSButtons(this.iframeViewerPdfRef.el, {
+                    hidePDFJSButtonsExtended(this.iframeViewerPdfRef.el, {
                         hideDownload: true,
                         hidePrint: true,
                     });

@@ -18,17 +18,17 @@
                     <field
                         name="study_ids"
                         widget="medical_one2many"
-                        mode="tree,kanban"
+                        mode="list,kanban"
                         options="{'record_action': 'get_formview_action'}"
                     >
-                        <tree>
+                        <list>
                             <field name="instance_uid" />
                             <field name="description" />
                             <field name="modality_ids" widget="many2many_tags" />
                             <field name="study_date" />
                             <field name="series_count" />
                             <field name="instances_count" />
-                        </tree>
+                        </list>
                         <kanban class="o_kanban_mobile">
                             <field name="name" />
                             <templates>

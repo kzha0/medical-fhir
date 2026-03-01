@@ -5,11 +5,10 @@
 
 {
     "name": "Medical Administration Location",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Medical",
     "website": "https://github.com/tegin/medical-fhir",
-    "author": "LasLabs, CreuBlanca, ForgeFlow,"
-    "Odoo Community Association (OCA), Tegin",
+    "author": "LasLabs, CreuBlanca, ForgeFlow,Odoo Community Association (OCA), Tegin",
     "license": "LGPL-3",
     "depends": ["medical_base"],
     "data": [

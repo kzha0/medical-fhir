@@ -26,7 +26,7 @@
                     name="action_view_family_history"
                     class="oe_stat_button"
                     icon="fa-history"
-                    attrs="{'invisible':[('family_history_count', '=', 0)]}"
+                    invisible="not family_history_count"
                 >
                     <field
                         name="family_history_count"
@@ -60,7 +60,7 @@
                         name="impression_specialty_ids"
                         context="{'encounter_id': id}"
                     >
-                        <tree
+                        <list
                             decoration-warning="impressions_in_progress_count &gt; 0"
                             default_order="impression_last_update desc"
                         >
@@ -82,7 +82,7 @@
                                 class="oe_link"
                             />
                             <field name="impressions_in_progress_count" invisible="1" />
-                        </tree>
+                        </list>
                         <form options="{'no_open':True}" />
                     </field>
                 </page>

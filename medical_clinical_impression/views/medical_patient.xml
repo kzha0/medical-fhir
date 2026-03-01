@@ -15,7 +15,7 @@
                     name="action_view_family_history"
                     class="oe_stat_button"
                     icon="fa-history"
-                    attrs="{'invisible':[('family_history_count', '=', 0)]}"
+                    invisible="not family_history_count"
                 >
                     <field
                         name="family_history_count"
@@ -47,10 +47,10 @@
                     <field
                         name="impression_specialty_ids"
                         context="{'patient_id': id}"
-                        mode="tree,kanban"
+                        mode="list,kanban"
                         options="{'record_action': 'get_specialty_impression'}"
                     >
-                        <tree
+                        <list
                             decoration-warning="impressions_in_progress_count &gt; 0"
                             default_order="impression_last_update desc"
                         >
@@ -58,7 +58,7 @@
                             <field name="impression_last_update" string="Last Update" />
                             <field name="patient_impression_count" string="Count" />
                             <field name="impressions_in_progress_count" invisible="1" />
-                        </tree>
+                        </list>
 
                         <kanban class="o_kanban_mobile">
                             <templates>
@@ -125,7 +125,7 @@
                     class="alert alert-danger row"
                     role="alert"
                     style="margin-bottom:0px;"
-                    attrs="{'invisible':[('medical_condition_count', '=', 0)]}"
+                    invisible="not medical_condition_count"
                 >
                 <field
                         name="warning_info"
@@ -143,7 +143,7 @@
                     name="action_view_family_history"
                     class="oe_stat_button"
                     icon="fa-history"
-                    attrs="{'invisible':[('family_history_count', '=', 0)]}"
+                    invisible="not family_history_count"
                 >
                     <field
                         name="family_history_count"
@@ -183,11 +183,11 @@
                     <field
                         name="impression_specialty_ids"
                         widget="medical_one2many"
-                        mode="tree,kanban"
+                        mode="list,kanban"
                         context="{'patient_id': id}"
                         options="{'record_action': 'get_specialty_impression'}"
                     >
-                        <tree
+                        <list
                             decoration-warning="impressions_in_progress_count &gt; 0"
                             default_order="impression_last_update desc"
                         >
@@ -195,7 +195,7 @@
                             <field name="impression_last_update" string="Last Update" />
                             <field name="patient_impression_count" string="Count" />
                             <field name="impressions_in_progress_count" invisible="1" />
-                        </tree>
+                        </list>
                         <kanban class="o_kanban_mobile">
                             <templates>
                                 <t t-name="kanban-box">

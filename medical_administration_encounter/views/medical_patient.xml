@@ -14,7 +14,7 @@
                     type="object"
                     name="action_view_encounter_ids"
                     class="oe_stat_button"
-                    attrs="{'invisible': [('encounter_count', '=', 0)]}"
+                    invisible="not encounter_count"
                     icon="fa-hospital-o"
                 >
                     <field
@@ -39,7 +39,7 @@
                     type="action"
                     name="%(medical_administration_encounter.action_encounter_medical_his)s"
                     class="oe_stat_button"
-                    attrs="{'invisible': [('encounter_count', '=', 0)]}"
+                    invisible="not encounter_count"
                     icon="fa-hospital-o"
                 >
                     <field

@@ -5,7 +5,7 @@
     "name": "Medical Diagnostic Report Encounter",
     "summary": """
         Extends the medical_diagnostic_report funcionality""",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "dixmit, Tegin",
     "website": "https://github.com/tegin/medical-fhir",

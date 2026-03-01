@@ -5,7 +5,7 @@
 {
     "name": "Medical Location with stock",
     "summary": "Medical administration location with stock",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Medical",
     "author": "CreuBlanca, ForgeFlow, Tegin",
     "website": "https://github.com/tegin/medical-fhir",

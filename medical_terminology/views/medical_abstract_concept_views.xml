@@ -5,22 +5,22 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 -->
 <odoo>
-    <record model="ir.ui.view" id="medical_abstract_concept_tree">
-        <field name="name">medical.abstract.concept.tree</field>
+    <record model="ir.ui.view" id="medical_abstract_concept_list">
+        <field name="name">medical.abstract.concept.list</field>
         <field name="model">medical.abstract.concept</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="code" />
                 <field name="name" />
                 <field name="definition" />
-            </tree>
+            </list>
         </field>
     </record>
-    <record model="ir.ui.view" id="medical_abstract_concept_uniparent_tree">
-        <field name="name">medical.abstract.concept.uniparent.tree</field>
+    <record model="ir.ui.view" id="medical_abstract_concept_uniparent_list">
+        <field name="name">medical.abstract.concept.uniparent.list</field>
         <field name="model">medical.abstract.concept.uniparent</field>
         <field name="mode">primary</field>
-        <field name="inherit_id" ref="medical_abstract_concept_tree" />
+        <field name="inherit_id" ref="medical_abstract_concept_list" />
         <field name="arch" type="xml">
             <field name="definition" position="after">
                 <field name="parent_id" options="{'no_create': True}" />
@@ -37,15 +37,15 @@
                         <field name="editable" invisible="1" />
                         <field
                             name="code"
-                            attrs="{'readonly': [('editable', '=', False)]}"
+                            readonly="not editable"
                         />
                         <field
                             name="name"
-                            attrs="{'readonly': [('editable', '=', False)]}"
+                            readonly="not editable"
                         />
                         <field
                             name="definition"
-                            attrs="{'readonly': [('editable', '=', False)]}"
+                            readonly="not editable"
                         />
                     </group>
                     <notebook />
@@ -63,14 +63,14 @@
                 <field
                     name="parent_id"
                     options="{'no_create': True}"
-                    attrs="{'readonly': [('editable', '=', False)]}"
+                    readonly="not editable"
                 />
             </field>
             <notebook position="inside">
                 <page string="Direct childs">
                     <field
                         name="child_ids"
-                        attrs="{'readonly': [('editable', '=', False)]}"
+                        readonly="not editable"
                     />
                 </page>
             </notebook>
@@ -86,14 +86,14 @@
                 <field
                     name="parent_ids"
                     widget="many2many_tags"
-                    attrs="{'readonly': [('editable', '=', False)]}"
+                    readonly="not editable"
                 />
             </field>
             <notebook position="inside">
                 <page string="Direct childs">
                     <field
                         name="child_ids"
-                        attrs="{'readonly': [('editable', '=', False)]}"
+                        readonly="not editable"
                     />
                 </page>
                 <page string="Full childs">

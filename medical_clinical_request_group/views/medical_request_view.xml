@@ -30,7 +30,7 @@
                 <field
                     name="request_group_id"
                     readonly="1"
-                    attrs="{'invisible': [('request_group_id', '=', False)]}"
+                    invisible="not request_group_id"
                 />
             </group>
         </field>

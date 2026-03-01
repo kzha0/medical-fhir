@@ -13,21 +13,21 @@
                     <button
                         string="Validate"
                         name="validate_action"
-                        states="draft"
+                        invisible="state != 'draft'"
                         type="object"
                         class="btn-success"
                     />
                     <button
                         string="Complete"
                         name="complete_action"
-                        states="active"
+                        invisible="state != 'active'"
                         type="object"
                         class="btn-success"
                     />
                     <button
                         string="Cancel"
                         name="cancel_action"
-                        states="draft,active,completed"
+                        invisible="state not in ['draft', 'active', 'completed']"
                         type="object"
                         class="btn-danger"
                     />
@@ -38,13 +38,13 @@
                         name="web_ribbon"
                         text="Completed"
                         bg_color="bg-success"
-                        attrs="{'invisible':[('state', '!=', 'completed')]}"
+                        invisible="state != 'completed'"
                     />
                     <widget
                         name="web_ribbon"
                         text="Cancelled"
                         bg_color="bg-danger"
-                        attrs="{'invisible':[('state', '!=', 'cancelled')]}"
+                        invisible="state != 'cancelled'"
                     />
                     <h2>
                         <label for="internal_identifier" />
@@ -56,7 +56,7 @@
                             nolabel="1"
                             decoration-danger="1"
                             colspan="2"
-                            attrs="{'invisible':[('show_encounter_warning', '=', False)]}"
+                            invisible="not show_encounter_warning"
                         />
                         <field name="show_encounter_warning" invisible="1" />
                         <group>
@@ -66,23 +66,23 @@
                                 widget="selection"
                                 readonly="False"
                                 domain="[('patient_id', '=', patient_id)]"
-                                attrs="{'readonly':[('state', '!=', 'draft')]}"
+                                readonly="state != 'draft'"
                             />
                             <field name="category" invisible="1" />
                         </group>
                         <group>
                             <field
                                 name="requester_id"
-                                states="active,completed,cancelled"
+                                invisible="state not in ['active', 'completed', 'cancelled']"
                             />
                             <field
                                 name="validation_date"
-                                states="active,completed,cancelled"
+                                invisible="state not in ['active', 'completed', 'cancelled']"
                             />
-                            <field name="cancel_date" states="cancelled" readonly="1" />
+                            <field name="cancel_date" invisible="state != 'cancelled'" readonly="1" />
                             <field
                                 name="cancel_user_id"
-                                states="cancelled"
+                                invisible="state != 'cancelled'"
                                 readonly="1"
                             />
                             <field name="can_administrate" invisible="1" />
@@ -92,9 +92,9 @@
                         <page name="prescriptions" string="Prescriptions" required="1">
                             <field
                                 name="product_request_ids"
-                                attrs="{'readonly':[('state', '!=', 'draft')]}"
+                                readonly="state != 'draft'"
                             >
-                                <tree
+                                <list
                                     editable="bottom"
                                     decoration-muted="state == 'cancelled'"
                                 >
@@ -118,12 +118,12 @@
                                     <field
                                         name="rate_quantity"
                                         string="Rate"
-                                        attrs="{'invisible': [('product_type', '!=', 'medication')]}"
+                                        invisible="product_type != 'medication'"
                                     />
                                     <field
                                         name="rate_uom_id"
                                         string="Uom"
-                                        attrs="{'invisible': [('product_type', '!=', 'medication')], 'required': [('product_type', '==', 'medication')]}"
+                                        invisible="product_type != 'medication'" required="product_type == 'medication'"
                                         domain="[('category_id', '=', %(uom.uom_categ_wtime)s)]"
                                         options="{'no_create': True, 'no_open': True}"
                                     />
@@ -132,12 +132,12 @@
                                     <field
                                         name="duration"
                                         string="Duration"
-                                        attrs="{'invisible': [('product_type', '!=', 'medication')]}"
+                                        invisible="product_type != 'medication'"
                                     />
                                     <field
                                         name="duration_uom_id"
                                         string="Uom"
-                                        attrs="{'invisible': [('product_type', '!=', 'medication')], 'required': [('product_type', '==', 'medication')]}"
+                                        invisible="product_type != 'medication'" required="product_type == 'medication'"
                                         domain="[('category_id', '=', %(uom.uom_categ_wtime)s)]"
                                         options="{'no_create': True, 'no_open': True}"
                                     />
@@ -146,7 +146,7 @@
                                         string="Adm. Route"
                                         domain="administration_route_domain"
                                         options="{'no_create': True, 'no_open': True}"
-                                        attrs="{'column_invisible': [('parent.category', '!=', 'inpatient')], 'invisible': [('product_type', '!=', 'medication')]}"
+                                        column_invisible="parent.category != 'inpatient'" invisible="product_type != 'medication'"
                                     />
                                     <field
                                         name="administration_route_domain"
@@ -155,11 +155,11 @@
                                     <field name="observations" />
                                     <field
                                         name="medical_product_id"
-                                        attrs="{'column_invisible': [('parent.category', '!=', 'discharge')]}"
+                                        column_invisible="parent.category != 'discharge'"
                                     />
                                     <field
                                         name="quantity_to_dispense"
-                                        attrs="{'column_invisible': [('parent.category', '!=', 'discharge')]}"
+                                        column_invisible="parent.category != 'discharge'"
                                     />
                                     <field name="can_administrate" invisible="1" />
                                     <button
@@ -168,13 +168,13 @@
                                         type="object"
                                         icon="fa-hand-holding-medical"
                                         string="Administrate"
-                                        attrs="{'column_invisible': ['|', ('parent.can_administrate', '!=', True), ('parent.category', '==', 'discharge')], 'invisible': [('can_administrate', '!=', True)]}"
+                                        column_invisible="not parent.can_administrate or parent.category == 'discharge'" invisible="not can_administrate"
                                     />
                                     <field
                                         name="product_administrations_count"
                                         class="text-right"
                                         string="Administrations"
-                                        attrs="{'column_invisible': ['|', ('parent.can_administrate', '!=', True), ('parent.category', '==', 'discharge')]}"
+                                        column_invisible="not parent.can_administrate or parent.category == 'discharge'"
                                     />
                                     <button
                                         name="action_view_medical_product_administration"
@@ -182,10 +182,10 @@
                                         type="object"
                                         icon="fa-solid fa-prescription-bottle"
                                         string="View Administrations"
-                                        attrs="{'invisible': [('state', '==', 'draft')], 'column_invisible': [('parent.category', '==', 'discharge')]}"
+                                        invisible="state == 'draft'" column_invisible="parent.category == 'discharge'"
                                     />
                                     <field name="state" readonly="1" />
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
@@ -222,13 +222,13 @@
             </search>
         </field>
     </record>
-    <record model="ir.ui.view" id="medical_product_request_order_tree_view">
+    <record model="ir.ui.view" id="medical_product_request_order_list_view">
         <field
             name="name"
-        >medical.product.request.order.tree (in medical_product_request)</field>
+        >medical.product.request.order.list (in medical_product_request)</field>
         <field name="model">medical.product.request.order</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 decoration-muted="state == 'cancelled'"
                 decoration-warning="state == 'draft'"
             >
@@ -239,7 +239,7 @@
                 <field name="requester_id" />
                 <field name="validation_date" />
                 <field name="state" />
-            </tree>
+            </list>
         </field>
     </record>
     <record
@@ -248,7 +248,7 @@
     >
         <field name="name">External Prescriptions</field>
         <field name="res_model">medical.product.request.order</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('category', '=', 'discharge')]</field>
         <field
             name="context"
@@ -260,7 +260,7 @@
     >
         <field name="name">Internal Medical Orders</field>
         <field name="res_model">medical.product.request.order</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('category', '=', 'inpatient')]</field>
         <field
             name="context"

@@ -75,7 +75,7 @@
                             colspan="2"
                             nolabel="1"
                         >
-                            <tree
+                            <list
                                 decoration-muted="state == 'cancelled'"
                                 decoration-success="state == 'completed'"
                                 decoration-warning="state == 'draft'"
@@ -90,7 +90,7 @@
                                 <field name="requester_id" />
                                 <field name="validation_date" />
                                 <field name="state" />
-                            </tree>
+                            </list>
                         </field>
                         <button
                             name="create_medical_product_request_order"
@@ -118,11 +118,11 @@
                         widget="medical_one2many"
                         readonly="1"
                         options="{'record_action': 'get_formview_action'}"
-                        mode="tree,kanban"
+                        mode="list,kanban"
                         colspan="2"
                         nolabel="1"
                     >
-                        <tree
+                        <list
                             decoration-muted="state == 'cancelled'"
                             decoration-success="state == 'completed'"
                             decoration-warning="state == 'draft'"
@@ -138,7 +138,7 @@
                             <field name="requester_id" />
                             <field name="validation_date" />
                             <field name="state" />
-                        </tree>
+                        </list>
                         <kanban>
                             <templates>
                                 <field name="state" invisible="1" />

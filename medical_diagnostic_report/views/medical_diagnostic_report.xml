@@ -17,7 +17,7 @@
                     class="btn-success"
                     confirm="Are you sure you want to validate this report?"
                     type="object"
-                    attrs="{'invisible':[('fhir_state', '!=', 'registered')]}"
+                    invisible="fhir_state != 'registered'"
                 />
                 <button
                     name="cancel_action"
@@ -25,7 +25,7 @@
                     confirm="Are you sure you want to cancel this report?"
                     class="btn-danger"
                     type="object"
-                    attrs="{'invisible':[('is_cancellable', '=', False)]}"
+                    invisible="not is_cancellable"
                 />
             </header>
             <xpath expr="//div[@name='button_box']" position="before">
@@ -33,7 +33,7 @@
                     name="web_ribbon"
                     text="Cancelled"
                     bg_color="bg-danger"
-                    attrs="{'invisible':[('fhir_state', '!=', 'cancelled')]}"
+                    invisible="fhir_state != 'cancelled'"
                 />
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
@@ -43,7 +43,7 @@
                     class="oe_stat_button"
                     icon="fa-signature"
                     string="Signature"
-                    attrs="{'invisible': [('signature_date', '=', False)]}"
+                    invisible="not signature_date"
                 >
                     <field name="signature_date" invisible="1" />
                 </button>
@@ -52,11 +52,10 @@
                     type="action"
                     icon="fa-plus"
                     string="Expand"
-                    states="registered"
+                    invisible="state != 'registered'"
                 />
             </xpath>
             <field name="patient_id" position="attributes">
-                <attribute name="attrs">{}</attribute>
                 <attribute name="invisible">1</attribute>
             </field>
             <field name="patient_id" position="before">
@@ -79,15 +78,15 @@
                 <field name="issued_date" />
                 <field
                     name="issued_user_id"
-                    attrs="{'invisible':[('fhir_state', 'not in', ['final', 'cancelled'])]}"
+                    invisible="fhir_state not in ['final', 'cancelled']"
                 />
                 <field
                     name="cancel_date"
-                    attrs="{'invisible':[('fhir_state', '!=', 'cancelled')]}"
+                    invisible="fhir_state != 'cancelled'"
                 />
                 <field
                     name="cancel_user_id"
-                    attrs="{'invisible':[('fhir_state', '!=', 'cancelled')]}"
+                    invisible="fhir_state != 'cancelled'"
                 />
                 <field name="item_blocked" invisible="1" />
                 <field name="with_observation" invisible="1" />
@@ -98,14 +97,14 @@
                 <page
                     name="observation"
                     string="Observations"
-                    attrs="{'invisible':[('with_observation', '=', False)]}"
+                    invisible="not with_observation"
                 >
                     <field
                         name="observation_ids"
                         widget="section_and_note_one2many"
                         options="{'hide_delete_create': 'item_blocked'}"
                     >
-                        <tree editable="bottom">
+                        <list editable="bottom">
                             <control>
                                 <create
                                     string="Add a section"
@@ -143,14 +142,14 @@
                             <field
                                 name="sequence"
                                 widget="handle"
-                                attrs="{'column_invisible': [('parent.item_blocked', '=', True)]}"
+                                column_invisible="parent.item_blocked"
                             />
                             <field name="display_type" invisible="1" />
                             <field name="concept_id" invisible="1" />
                             <field
                                 name="name"
                                 widget="section_and_note_text"
-                                attrs="{'readonly': ['|', ('blocked', '=', True), ('concept_id', '!=', False)]}"
+                                readonly="blocked or concept_id"
                             />
                             <field name="value" widget="diagnostic_report_value" />
 
@@ -182,7 +181,7 @@
                             <!-- TODO: Unitl here....-->
                             <field
                                 name="uom_id"
-                                attrs="{'readonly': ['|', '|',('blocked', '=', True), ('concept_id', '!=', False), '|', '|','|', ('value_type', '=', 'selection'), ('value_type', '=', 'str'),('value_type', '=', 'date'), ('value_type', '=', 'bool')]}"
+                                readonly="blocked or concept_id or value_type in ['selection', 'str', 'date', 'bool']"
                             />
                             <field name="reference_format" invisible="1" />
                             <field name="reference_range_high" invisible="1" />
@@ -192,16 +191,16 @@
                             <field name="reference_range_limit" />
                             <field name="interpretation" />
                             <field name="blocked" invisible="1" />
-                        </tree>
+                        </list>
                     </field>
                 </page>
                 <page
                     name="composition"
                     string="Composition"
-                    attrs="{'invisible':[('with_composition', '=', False), ('with_conclusion', '=', False)]}"
+                    invisible="not (with_composition or with_conclusion)"
                 >
                 <group
-                        attrs="{'invisible':[('with_composition', '=', False)]}"
+                        invisible="not with_composition"
                         string="Composition"
                     >
                     <field
@@ -213,12 +212,12 @@
                     </group>
 
                 <group
-                        attrs="{'invisible':[('with_conclusion', '=', False)]}"
+                        invisible="not with_conclusion"
                         string="Conclusion"
                     >
                     <field
                             name="conclusion"
-                            attrs="{'invisible':[('with_conclusion', '=', False)]}"
+                            invisible="not with_conclusion"
                             nolabel="1"
                             colspan="2"
                         />
@@ -244,15 +243,15 @@
             </search>
         </field>
     </record>
-    <record model="ir.ui.view" id="medical_diagnostic_report_tree_view">
+    <record model="ir.ui.view" id="medical_diagnostic_report_list_view">
         <field
             name="name"
-        >medical.diagnostic.report.tree (in medical_diagnostic_report)</field>
+        >medical.diagnostic.report.list (in medical_diagnostic_report)</field>
         <field name="model">medical.diagnostic.report</field>
         <field name="mode">primary</field>
-        <field name="inherit_id" ref="medical_base.medical_event_tree" />
+        <field name="inherit_id" ref="medical_base.medical_event_list" />
         <field name="arch" type="xml">
-            <xpath expr="//tree" position="attributes">
+            <xpath expr="//list" position="attributes">
                 <attribute name="create">false</attribute>
                 <attribute
                     name="decoration-warning"
@@ -261,15 +260,15 @@
                     name="decoration-danger"
                 >fhir_state == 'cancelled'</attribute>
             </xpath>
-            <tree>
+            <list>
                 <field name="issued_date" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.actions.act_window" id="medical_diagnostic_report_act_window">
         <field name="name">Diagnostic Report</field>
         <field name="res_model">medical.diagnostic.report</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record
         model="ir.actions.act_window"
@@ -277,7 +276,7 @@
     >
         <field name="name">Diagnostic Report</field>
         <field name="res_model">medical.diagnostic.report</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('patient_id', '=', active_id)]</field>
     </record>
     <record model="ir.ui.menu" id="medical_diagnostic_report_menu">

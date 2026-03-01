@@ -5,18 +5,18 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 -->
 <odoo>
-    <record model="ir.ui.view" id="medical_sct_concept_tree">
-        <field name="name">medical.sct.concept.tree</field>
+    <record model="ir.ui.view" id="medical_sct_concept_list">
+        <field name="name">medical.sct.concept.list</field>
         <field name="model">medical.sct.concept</field>
         <field
             name="inherit_id"
-            ref="medical_terminology.medical_abstract_concept_tree"
+            ref="medical_terminology.medical_abstract_concept_list"
         />
         <field name="mode">primary</field>
         <field name="arch" type="xml">
-            <tree position="attributes">
+            <list position="attributes">
                 <attribute name="delete">false</attribute>
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="medical_sct_concept_form">
@@ -49,7 +49,7 @@
         <field name="name">Snomed codes</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">medical.sct.concept</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{}</field>
     </record>
     <record model="ir.ui.menu" id="medical_sct_concept">

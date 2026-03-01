@@ -5,7 +5,7 @@
 {
     "name": "Medical Financial Coverage",
     "summary": "Add Coverage concept",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "CreuBlanca, Tegin, ForgeFlow, Odoo Community Association (OCA)",
     "category": "Medical",
     "website": "https://github.com/tegin/medical-fhir",

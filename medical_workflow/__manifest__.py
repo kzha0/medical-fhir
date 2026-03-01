@@ -5,7 +5,7 @@
 {
     "name": "Medical Workflow",
     "summary": "Medical workflow base",
-    "version": "16.0.1.0.1",
+    "version": "18.0.1.0.1",
     "author": "CreuBlanca, ForgeFlow, Odoo Community Association (OCA), Tegin",
     "category": "Medical",
     "website": "https://github.com/tegin/medical-fhir",

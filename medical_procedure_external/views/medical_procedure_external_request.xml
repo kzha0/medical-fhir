@@ -17,7 +17,7 @@
                     class="btn-success"
                     confirm="Are you sure you want to validate this external request?"
                     type="object"
-                    attrs="{'invisible':[('state', '!=', 'draft')]}"
+                    invisible="state != 'draft'"
                 />
                 <button
                     name="cancel_action"
@@ -25,7 +25,7 @@
                     confirm="Are you sure you want to cancel this external request?"
                     class="btn-danger"
                     type="object"
-                    attrs="{'invisible':[('is_cancellable', '=', False)]}"
+                    invisible="not is_cancellable"
                 />
             </header>
             <xpath expr="//div[@name='button_box']" position="before">
@@ -33,13 +33,13 @@
                     name="web_ribbon"
                     title="Final"
                     bg_color="bg-success"
-                    attrs="{'invisible': [('state', '!=', 'final')]}"
+                    invisible="state != 'final'"
                 />
                 <widget
                     name="web_ribbon"
                     title="Cancelled"
                     bg_color="bg-danger"
-                    attrs="{'invisible': [('state', '!=', 'cancelled')]}"
+                    invisible="state != 'cancelled'"
                 />
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
@@ -49,7 +49,7 @@
                     class="oe_stat_button"
                     icon="fa-signature"
                     string="Signature"
-                    attrs="{'invisible': [('signature_date', '=', False)]}"
+                    invisible="not signature_date"
                 >
                     <field name="signature_date" invisible="1" />
                 </button>
@@ -58,23 +58,22 @@
                 <attribute name="string">External Request</attribute>
             </xpath>
             <field name="patient_id" position="attributes">
-                <attribute name="attrs">{}</attribute>
                 <attribute name="invisible">1</attribute>
             </field>
             <field name="patient_id" position="before">
                 <field
                     name="patient_name"
-                    attrs="{'readonly':[('state', '!=', 'draft')]}"
+                    readonly="state != 'draft'"
                 />
                 <field name="encounter_id" />
-                <field name="vat" attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                <field name="vat" readonly="state != 'draft'" />
                 <field
                     name="patient_age"
-                    attrs="{'readonly':[('state', '!=', 'draft')]}"
+                    readonly="state != 'draft'"
                 />
                 <field
                     name="patient_origin"
-                    attrs="{'readonly':[('state', '!=', 'draft')]}"
+                    readonly="state != 'draft'"
                 />
                 <field name="is_cancellable" invisible="1" />
             </field>
@@ -89,16 +88,16 @@
             </field>
             <field name="occurrence_date" position="after">
                 <field name="issued_date" />
-                <field name="issued_user_id" states="final,cancelled" />
-                <field name="cancel_date" states="cancelled" />
-                <field name="cancel_user_id" states="cancelled" />
+                <field name="issued_user_id" invisible="state not in ('final', 'cancelled')" />
+                <field name="cancel_date" invisible="state != 'cancelled'" />
+                <field name="cancel_user_id" invisible="state != 'cancelled'" />
             </field>
             <xpath expr="//notebook/page[1]" position="before">
                 <page name="composition" string="Composition">
                     <field
                         name="composition"
                         options="{'automatic_summernote_height': 1}"
-                        attrs="{'readonly':[('state', '!=', 'draft')]}"
+                        readonly="state != 'draft'"
                     />
                 </page>
             </xpath>
@@ -121,28 +120,28 @@
             </search>
         </field>
     </record>
-    <record model="ir.ui.view" id="medical_procedure_external_request_tree_view">
+    <record model="ir.ui.view" id="medical_procedure_external_request_list_view">
         <field
             name="name"
-        >medical.procedure.external.request.tree (in medical_procedure_external)</field>
+        >medical.procedure.external.request.list (in medical_procedure_external)</field>
         <field name="model">medical.procedure.external.request</field>
         <field name="mode">primary</field>
-        <field name="inherit_id" ref="medical_base.medical_event_tree" />
+        <field name="inherit_id" ref="medical_base.medical_event_list" />
         <field name="arch" type="xml">
-            <xpath expr="//tree" position="attributes">
+            <xpath expr="//list" position="attributes">
                 <attribute name="create">false</attribute>
             </xpath>
-            <xpath expr="//tree" position="attributes">
+            <xpath expr="//list" position="attributes">
                 <attribute name="string">External Request</attribute>
             </xpath>
-            <xpath expr="//tree" position="attributes">
+            <xpath expr="//list" position="attributes">
                 <attribute name="decoration-warning">state == 'draft'</attribute>
                 <attribute name="decoration-muted">state == 'cancelled'</attribute>
             </xpath>
-            <tree>
+            <list>
                 <field name="issued_date" />
                 <field name="state" invisible="1" />
-            </tree>
+            </list>
         </field>
     </record>
     <record
@@ -151,7 +150,7 @@
     >
         <field name="name">External Request</field>
         <field name="res_model">medical.procedure.external.request</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record model="ir.ui.menu" id="medical_procedure_external_request_menu">
         <field name="name">External Request</field>

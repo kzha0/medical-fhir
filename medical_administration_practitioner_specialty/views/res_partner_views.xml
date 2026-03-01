@@ -16,7 +16,7 @@
                     name="specialty_ids"
                     widget="many2many_tags"
                     options="{'no_create': True}"
-                    attrs="{'invisible': [('is_practitioner','=',False)]}"
+                    invisible="not is_practitioner"
                 />
             </group>
         </field>

@@ -34,7 +34,7 @@
                     name="action_view_medical_conditions"
                     class="oe_stat_button"
                     icon="fa-heartbeat"
-                    attrs="{'invisible':[('medical_condition_count', '=', 0)]}"
+                    invisible="not medical_condition_count"
                     groups="medical_base.group_medical_assistance_user"
                 >
                     <field
@@ -49,7 +49,7 @@
                     name="action_view_medical_allergies"
                     class="oe_stat_button"
                     icon="fa-allergies"
-                    attrs="{'invisible':[('medical_allergies_count', '=', 0)]}"
+                    invisible="not medical_allergies_count"
                     groups="medical_base.group_medical_assistance_user"
                 >
                     <field
@@ -64,7 +64,7 @@
                     name="action_view_medical_warnings"
                     class="oe_stat_button"
                     icon="fa-exclamation-triangle"
-                    attrs="{'invisible':[('medical_warning_count', '=', 0)]}"
+                    invisible="not medical_warning_count"
                     groups="medical_base.group_medical_assistance_user"
                 >
                     <field

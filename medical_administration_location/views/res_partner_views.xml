@@ -15,7 +15,7 @@
                 <field name="is_location" />
             </field>
             <xpath
-                expr="//field[@name='child_ids']//form//field[@name='parent_id']"
+                expr="//field[@name='child_ids']//form//field[@name='company_id']"
                 position="after"
             >
                 <!-- We need this in order to not make by default the childs as location -->
@@ -27,7 +27,7 @@
         <field name="name">Medical Locations</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="domain">[('is_location', '=', True)]</field>
         <field
             name="context"

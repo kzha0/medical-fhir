@@ -5,7 +5,7 @@
 {
     "name": "Medical Care plan",
     "summary": "Medical care plan",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Tegin, ForgeFlow, Dixmit",
     "website": "https://github.com/tegin/medical-fhir",
     "category": "Medical",

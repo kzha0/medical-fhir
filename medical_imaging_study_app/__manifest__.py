@@ -4,7 +4,7 @@
 {
     "name": "Medical Imaging Study App",
     "summary": """Integrate webhooks Apps inside imaging studies""",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "Dixmit,Tegin",
     "website": "https://github.com/tegin/medical-fhir",

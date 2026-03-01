@@ -19,7 +19,7 @@
                     name="action_view_careplans"
                     class="oe_stat_button"
                     icon="fa-hospital-o"
-                    attrs="{'invisible': [('state','=','planned')]}"
+                    invisible="state == 'planned'"
                 >
                     <field name="careplan_count" widget="statinfo" string="Careplans" />
                     <field name="careplan_ids" invisible="1" />
